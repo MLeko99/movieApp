@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MovieList from "./MovieList";
 
-const SearchBar = ({ handleMovieClick }) => {
+const SearchBar = () => {
   const [input, setInput] = useState("");
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
@@ -50,7 +50,7 @@ const SearchBar = ({ handleMovieClick }) => {
         onChange={onChange}
       />
       <button onClick={handleClick}>Pretraga</button>
-      <MovieList movies={movies} handleMovieImgClick={handleMovieClick} />
+      <MovieList movies={movies} />
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-const MovieDetail = ({ imdbID }) => {
+const MovieDetail = () => {
+  const { imdbID } = useParams(); // Dohvaćanje parametra iz URL-a
   const [movieDetails, setMovieDetails] = useState(null);
 
   useEffect(() => {
@@ -24,17 +26,19 @@ const MovieDetail = ({ imdbID }) => {
   };
 
   const addToFavorites = () => {
-    if (typeof localStorage !== "undefined") {
-      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      if (!favorites.find((movie) => movie.imdbID === movieDetails.imdbID)) {
-        favorites.push(movieDetails);
-        localStorage.setItem("favorites", JSON.stringify(favorites));
-        alert("Film je dodan u omiljene!");
-      } else {
-        alert("Film je već u omiljenima!");
-      }
+    if (!movieDetails) return;
+
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const alreadyFavorite = favorites.some(
+      (movie) => movie.imdbID === movieDetails.imdbID
+    );
+
+    if (!alreadyFavorite) {
+      favorites.push(movieDetails);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      alert("Film je dodan u omiljene!");
     } else {
-      alert("LocalStorage nije dostupan!");
+      alert("Film je već u omiljenima!");
     }
   };
 
